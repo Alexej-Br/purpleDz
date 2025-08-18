@@ -29,7 +29,7 @@ type EmailConfig struct {
 }
 
 func LoadConfig() *Config {
-	err := godotenv.Load("../.env")
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Println("ENV_FILE_ERROR, using default config")
 	}
