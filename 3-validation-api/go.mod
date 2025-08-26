@@ -7,6 +7,8 @@ require github.com/joho/godotenv v1.5.1
 require (
 	github.com/go-playground/validator/v10 v10.27.0
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
+	gorm.io/driver/postgres v1.6.0
+	gorm.io/gorm v1.30.1
 )
 
 require (
@@ -25,6 +27,4 @@ require (
 	golang.org/x/sync v0.16.0 // indirect
 	golang.org/x/sys v0.35.0 // indirect
 	golang.org/x/text v0.28.0 // indirect
-	gorm.io/driver/postgres v1.6.0 // indirect
-	gorm.io/gorm v1.30.1 // indirect
 )

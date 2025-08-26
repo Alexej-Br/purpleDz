@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"go-adv/http/configs"
 	"go-adv/http/internal/auth"
+	"go-adv/http/internal/link"
 	"go-adv/http/internal/verify"
 	"go-adv/http/pkg/db"
 	"net/http"
@@ -11,14 +12,21 @@ import (
 
 func main() {
 	conf := configs.LoadConfig()
-	_ = db.NewDB(conf)
+	db := db.NewDB(conf)
 	router := http.NewServeMux()
+
+	// Repositories
+	linkRepository := link.NewLinkRepository(db)
+
+	// Handlers
 	auth.NewAuthHandler(router, auth.AuthHandlerDeps{
 		Config: conf,
 	})
-
 	verify.NewEmailHandler(router, verify.EmailHandlerDeps{
 		Config: conf,
+	})
+	link.NewLinkHandler(router, link.LinkHandlerDeps{
+		LinkRepository: linkRepository,
 	})
 
 	server := http.Server{
