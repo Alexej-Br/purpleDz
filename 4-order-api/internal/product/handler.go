@@ -68,6 +68,7 @@ func (handler *ProductHandler) Create() http.HandlerFunc {
 		createdProduct, err := handler.ProductRepository.Create(product)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 		response.EncodeResponse(w, createdProduct, http.StatusCreated)
 	}
@@ -117,6 +118,7 @@ func (handler *ProductHandler) Update() http.HandlerFunc {
 		})
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 		response.EncodeResponse(w, createdProduct, http.StatusCreated)
 	}

@@ -37,7 +37,7 @@ func (repo *ProductRepository) Create(product *Product) (*Product, error) {
 func (repo *ProductRepository) DeleteByID(id uint) error {
 	result := repo.DB.Delete(&Product{}, id)
 	if result.Error != nil {
-		return nil
+		return result.Error
 	}
 	return nil
 }

@@ -12,5 +12,5 @@ func Decode[T any](body io.ReadCloser) (T, error) {
 	if err != nil {
 		return payload, err
 	}
-	return payload, err
+	return payload, nil
 }
