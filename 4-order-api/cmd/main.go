@@ -1,18 +1,23 @@
 package main
 
 import (
-	"fmt"
 	"go-adv/4-order-api/configs"
 	"go-adv/4-order-api/internal/product"
 	"go-adv/4-order-api/pkg/db"
+	"go-adv/4-order-api/pkg/middleware"
+	
 
 	"net/http"
+
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
 	config := configs.LoadConfig()
+	middleware.SetupLogger()
 	db := db.NewDB(config)
 	router := http.NewServeMux()
+
 	productRepository := product.NewProductRepository(db)
 
 	product.NewProductHandler(router, product.ProductHandlerDeps{
@@ -21,8 +26,9 @@ func main() {
 
 	server := http.Server{
 		Addr:    ":8083",
-		Handler: router,
+		Handler: middleware.Log(router),
 	}
-	fmt.Printf("Server startted on %v\n", server.Addr)
+	logrus.Infof("Server started on %v", server.Addr)
 	server.ListenAndServe()
 }
+

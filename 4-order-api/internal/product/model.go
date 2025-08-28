@@ -7,8 +7,8 @@ import (
 )
 
 type Product struct {
-	gorm.Model
-	Name         string         `json:"name"`
+	gorm.Model   ``
+	Name         string         `json:"name" validate:"required"`
 	Description  string         `json:"description"`
 	Manufacturer string         `json:"manufacturer"`
 	Price        float32        `json:"price"`
