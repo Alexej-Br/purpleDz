@@ -4,7 +4,7 @@ package product
 import "github.com/lib/pq"
 
 type ProductCreateRequest struct {
-	Name         string         `json:"name"`
+	Name         string         `json:"name" validate:"required"`
 	Description  string         `json:"description"`
 	Manufacturer string         `json:"manufacturer"`
 	Price        float32        `json:"price"`
