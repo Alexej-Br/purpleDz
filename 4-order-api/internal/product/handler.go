@@ -92,7 +92,7 @@ func (handler *ProductHandler) Delete() func(http.ResponseWriter, *http.Request)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		response.EncodeResponse(w, nil, http.StatusOK)
+		response.EncodeResponse(w, nil, http.StatusNoContent)
 	}
 }
 

@@ -16,7 +16,7 @@ func Log(next http.Handler) http.Handler {
 		next.ServeHTTP(wrapper, r)
 		lFields := logrus.Fields{
 			"Method":      r.Method,
-			"URl":         r.URL.Path,
+			"URL":         r.URL.Path,
 			"Remote addr": r.RemoteAddr,
 			"Status code": wrapper.StatusCode,
 		}

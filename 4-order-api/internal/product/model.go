@@ -7,12 +7,12 @@ import (
 )
 
 type Product struct {
-	gorm.Model   ``
+	gorm.Model
 	Name         string         `json:"name" validate:"required"`
 	Description  string         `json:"description"`
 	Manufacturer string         `json:"manufacturer"`
 	Price        float32        `json:"price"`
-	Images       pq.StringArray `gorm:"type:text[]" json:"image"`
+	Images       pq.StringArray `gorm:"type:text[]" json:"images"`
 }
 
 func NewProduct(name, description, manufacturer string, price float32, images []string) *Product {

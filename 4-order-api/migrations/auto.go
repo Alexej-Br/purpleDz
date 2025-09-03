@@ -2,6 +2,7 @@
 package main
 
 import (
+	"go-adv/4-order-api/internal/auth"
 	"go-adv/4-order-api/internal/product"
 	"os"
 
@@ -19,5 +20,5 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	db.AutoMigrate(&product.Product{})
+	db.AutoMigrate(&product.Product{}, &auth.User{})
 }
