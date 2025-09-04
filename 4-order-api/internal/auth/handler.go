@@ -2,10 +2,10 @@ package auth
 
 import (
 	"errors"
+	"fmt"
 	"go-adv/4-order-api/pkg/jwt"
 	"go-adv/4-order-api/pkg/request"
 	"go-adv/4-order-api/pkg/response"
-	"log"
 	"net/http"
 )
 
@@ -35,7 +35,7 @@ func (handler *UserHandler) Create() http.HandlerFunc {
 		if err != nil {
 			return
 		}
-		resp := NewAuthResponse(*NewAuthPreResponse(CreateSession()))
+		resp := NewAuthResponse(*NewAuthPreResponse(CreateSession()), CreateCode())
 		_, err = handler.UserRepository.FindByPhone(body.Phone)
 		if err == nil {
 			handler.UserRepository.Update(NewUser(body.Phone, resp.SessionID, resp.Code))
@@ -59,11 +59,15 @@ func (handler *UserHandler) Verify() http.HandlerFunc {
 			return
 		}
 		isNorm, _ := handler.UserRepository.FindBySession(body.SessionID)
-		if isNorm == "" {
+		if isNorm == nil {
 			http.Error(w, errors.New("not find by session").Error(), http.StatusBadGateway)
 			return
 		}
-		token, err := handler.JWT.CreateJWT(isNorm)
+		if body.Code != isNorm.Code {
+			http.Error(w, errors.New("incorrect code").Error(), http.StatusBadGateway)
+			return
+		}
+		token, err := handler.JWT.CreateJWT(isNorm.Phone)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadGateway)
 			return

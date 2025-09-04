@@ -22,6 +22,6 @@ func NewAuthPreResponse(s string) *AuthPreResponse {
 	return &AuthPreResponse{SessionID: s}
 }
 
-func NewAuthResponse(r AuthPreResponse) *AuthResponse {
-	return &AuthResponse{r, "3456"}
+func NewAuthResponse(r AuthPreResponse, code string) *AuthResponse {
+	return &AuthResponse{r, code}
 }

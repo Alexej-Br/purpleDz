@@ -25,14 +25,14 @@ func (user *UserRepository) FindByPhone(phone string) (string, error) {
 	return u.Phone, nil
 }
 
-func (user *UserRepository) FindBySession(session string) (string, error) {
+func (user *UserRepository) FindBySession(session string) (*User, error) {
 	var u User
 	tx := user.DB.First(&u, "session_id=?", session)
 	if tx.Error != nil {
 		log.Println(tx.Error.Error())
-		return "", tx.Error
+		return nil, tx.Error
 	}
-	return u.Phone, nil
+	return &u, nil
 }
 
 func (user *UserRepository) NewUser(new *User) error {
