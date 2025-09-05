@@ -2,6 +2,9 @@
 package product
 
 import (
+	"go-adv/4-order-api/configs"
+	"go-adv/4-order-api/pkg/jwt"
+	"go-adv/4-order-api/pkg/middleware"
 	"go-adv/4-order-api/pkg/request"
 	"go-adv/4-order-api/pkg/response"
 	"net/http"
@@ -12,6 +15,8 @@ import (
 
 type ProductHandlerDeps struct {
 	ProductRepository *ProductRepository
+	Config            *configs.Config
+	JWT               *jwt.JWTStruct
 }
 
 type ProductHandler struct {
@@ -24,7 +29,7 @@ func NewProductHandler(router *http.ServeMux, deps ProductHandlerDeps) {
 	}
 	router.HandleFunc("GET /product/{id}", handler.GetOne())
 	router.HandleFunc("GET /product", handler.GetAll())
-	router.HandleFunc("POST /product", handler.Create())
+	router.Handle("POST /product", middleware.IsAuth(handler.Create(), deps.Config, deps.JWT))
 	router.HandleFunc("DELETE /product/{id}", handler.Delete())
 	router.HandleFunc("PATCH /product/{id}", handler.Update())
 

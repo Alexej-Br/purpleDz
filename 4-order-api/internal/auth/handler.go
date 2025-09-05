@@ -2,7 +2,6 @@ package auth
 
 import (
 	"errors"
-	"fmt"
 	"go-adv/4-order-api/pkg/jwt"
 	"go-adv/4-order-api/pkg/request"
 	"go-adv/4-order-api/pkg/response"
@@ -25,7 +24,7 @@ func NewUserHandler(router *http.ServeMux, deps UserHandlerDeps) {
 		JWT:            deps.JWT,
 	}
 	router.HandleFunc("POST /auth", handler.Create())
-	router.HandleFunc("POST /auth/verify", handler.Verify())
+	router.Handle("POST /auth/verify", handler.Verify())
 
 }
 

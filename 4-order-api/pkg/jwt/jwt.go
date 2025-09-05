@@ -5,6 +5,9 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+type JWTData struct {
+	Phone string
+}
 type JWTStruct struct {
 	Secret string
 }
@@ -20,4 +23,15 @@ func (j *JWTStruct) CreateJWT(phone string) (string, error) {
 		return "", err
 	}
 	return token, nil
+}
+
+func (j *JWTStruct) ParseJWT(token string) (bool, *JWTData) {
+	t, err := jwt.Parse(token, func(t *jwt.Token) (any, error) {
+		return []byte(j.Secret), nil
+	})
+	if err != nil {
+		return false, nil
+	}
+	phone := t.Claims.(jwt.MapClaims)["phone"]
+	return t.Valid, &JWTData{Phone: phone.(string)}
 }

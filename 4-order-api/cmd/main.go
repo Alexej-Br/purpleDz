@@ -29,6 +29,8 @@ func main() {
 	})
 	product.NewProductHandler(router, product.ProductHandlerDeps{
 		ProductRepository: productRepository,
+		Config:            config,
+		JWT:               jwt,
 	})
 
 	server := http.Server{
